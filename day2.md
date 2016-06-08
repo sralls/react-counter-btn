@@ -8,12 +8,12 @@ Yesterday, a lot of you copy-pasted the code for the 'Counter' in exercise 3 dir
 	create a folder 'dist' (short for distribution) this is where our generated code will live.
 	create a folder 'src' (short for source). This is where our code will live.
 	create a folder 'src/components.' This is where the source code for our components will go
-	create a file for counter.js and counterList.js in components. Separate the code and import counter into counter js.
-	In src create an exercise4.js file. Since counterList is defined externally it won't have much to do.
+	create a file for counter.js and counterList.jsx in components. Separate the code and import counter into counter.jsx.
+	In src create an exercise4.jsx file. Since counterList is defined externally it won't have much to do.
 	Update .gitignore so that the dist/bundle.js isn't committed
-	In dist create an html file with a div referenced by exercise4.js. It should import the script bundle.js
+	In dist create an html file with a div referenced by exercise4.jsx. It should import the script bundle.js
 
-2. Install webpack and use it to generate. dist/bundle.js from src/exercise4.js 
+2. Install webpack and use it to generate. dist/bundle.js from src/exercise4.jsx 
 
 3. Try using the webpack-dev-server to change the counters so they don't start at zero you shouldn't need to regenerate bundle.js. Enable hot reloading.
 
