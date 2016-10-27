@@ -18,10 +18,62 @@
        *   - The user should be able to add and remove counters from the list
        *   - All counters should have different state
        */
+        
+
+
+        var Counter = React.createClass({
+          getInitialState: function(){
+            return {counter: 0}
+        },
+
+        handleClick: function(event){
+          console.log(event.target.value)
+          if(event.target.value === "+"){
+            this.setState({counter: this.state.counter + 1}) 
+          } else {
+            this.setState({counter: this.state.counter - 1});
+          }
+        },
+
+        render: function(){
+          return ( 
+          <div>
+            <h3> Counter: {this.state.counter} </h3>
+            <input id="increase" type="button" onClick={this.handleClick} value="+"/>
+            <input id="decrease" type="button" onClick={this.handleClick} value="-"/>
+          </div>
+          )
+        }
+
+        });
 
       var CounterList = React.createClass({
 
+        getInitialState: function(){
+          return {counterArr: []}
+        },
+
+        handleClick: function(event){
+          if(event.target.value === "Add Counter"){
+            this.setState({counterArr: this.state.counterArr.concat(<Counter />)}) 
+          } else {
+            this.setState({counterArr: this.state.counterArr.slice(0, this.state.counterArr.length - 1 )})
+          }
+        },
+
+        render: function(){
+          return (
+            <div>
+              <input id="increase" type="button" onClick={this.handleClick} value="Add Counter"/>
+              <input id="decrease" type="button" onClick={this.handleClick} value="Remove Counter"/>
+              <div>{this.state.counterArr}</div>
+            </div>
+          )          
+        }
+
       });
+
+
       ReactDOM.render(
         <CounterList />,
         document.getElementById('root')
@@ -29,3 +81,15 @@
     </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

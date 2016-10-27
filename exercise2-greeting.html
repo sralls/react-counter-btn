@@ -21,9 +21,30 @@
        *   - When the text box is empty, the div should be empty (i.e. it shouldn't display 'Welcome to React,'.
        */
 
-      var Greeter = React.createClass({
 
-      });
+      var Greeter = React.createClass({
+        getInitialState : function(){       /** This is setting the initial state to "" an empty string */
+          return {value: ""}
+        },
+
+        textChange: function(event){                        /** This is listening for the state change*/
+          this.setState({value: event.target.value})        /** target is the input box, value is what is typed in the box */
+        },                                                  /** let's set a new state everytime there is an event in the input box */
+
+        inputBox: function(){                               /** this is listening to the input box */
+          if(this.state.value == ""){                       /** if it is empty, then just return an empty string aka nothing */
+            return "" 
+          } else {                                              
+            return "Welcome to React, " + this.state.value    /** otherwise, print welcome to react and print out the value of the state change */
+          }
+        },
+
+        /** {} makes the html know that we have JS code!*/
+        
+        render: function(){
+          return (<div>Name:<input type="text" onChange={this.textChange} value={this.state.value} /><div>{this.inputBox()}</div></div>)
+        }
+      })
 
       ReactDOM.render(
         <Greeter/>,

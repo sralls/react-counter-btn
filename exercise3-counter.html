@@ -22,6 +22,28 @@
        */
 
       var Counter= React.createClass({
+        getInitialState: function(){
+          return {counter: 0}
+        },
+
+        handleClick: function(event){
+          console.log(event.target.value)
+          if(event.target.value === "+"){
+            this.setState({counter: this.state.counter + 1}) 
+          } else {
+            this.setState({counter: this.state.counter - 1});
+          }
+        },
+
+        render: function(){
+          return ( 
+          <div>
+            <h3> Counter: {this.state.counter} </h3>
+            <input id="increase" type="button" onClick={this.handleClick} value="+"/>
+            <input id="decrease" type="button" onClick={this.handleClick} value="-"/>
+          </div>
+          )
+        }
 
       });
 

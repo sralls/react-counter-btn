@@ -16,7 +16,7 @@
       /**
        * EXERCISE
        *
-       * Create a Typeahead Input
+       * Create a Typeahead Input (Drop down menu)
        * ------------------------
        * Requirements:
        *   - As the user types in the input, a list of options should appear below it.
@@ -35,7 +35,42 @@
 
       var Typeahead = React.createClass({
 
+      getInitialState: function(){
+        return {value: ""}
+      },
+
+      textChange: function(event){
+        this.setState({value: event.target.value})
+      },
+      
+      carList: function(){
+        var self = this
+        var listCars = this.props.list
+        var textEntered = this.state.value
+        if(textEntered !== ""){
+            return listCars.filter(function(car){
+                      return car.match(new RegExp("^" + textEntered, 'i'))
+                    }) .map(function(filteredCar){
+                      return <li onClick={()=> self.setState({value: filteredCar})}>{filteredCar}</li>
+                    })
+        }
+      },
+
+      render: function(){
+        return ( <div>
+                    <h3>Type your favorite car: </h3>
+                      <input type="text" onChange={this.textChange} value={this.state.value} />
+                    <div>
+                      <ul>
+                        {this.carList()}
+                      </ul>
+                    </div>
+                  </div> 
+                )
+      }
+
       });
+
 
       ReactDOM.render(
         <Typeahead list={carBrands} />,
@@ -44,3 +79,4 @@
     </script>
   </body>
 </html>
+

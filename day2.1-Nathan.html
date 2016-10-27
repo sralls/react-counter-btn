@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/jsx">
+      /**
+       * EXERCISE
+       * <!--
+       1). Modify problem 4 so that instead of deleting the last counter in the list.
+       Each counter has an [x] box that can be used to delete that specific counter.
+       -->
+       */
+
+     var Deletable=React.createClass({
+       render: function(){
+        return (<div>
+            <div onClick={this.props.delete} >x</div>
+            {this.props.children}
+          </div>)
+        }
+     })
+
+
+      var Counter= React.createClass({
+        getInitialState: function(){
+          return {counter: 0};
+        },
+        handleChange: function(event){
+          this.setState({counter: event.target.value === "+" ? this.state.counter + 1: this.state.counter - 1});
+        },
+        render: function(){
+          return (<div>
+            <input type="submit" onClick={this.handleChange} value="+"/>
+            <input type="submit" onClick={this.handleChange} value="-"/>
+            <input type="submit" onClick={()=> this.state.counters.slice(0,this.state.counters.length - 1)} value="Delete Counter"/>
+            <div><h1>{this.state.counter}</h1></div>
+            </div>)
+        }
+      });
+
+      var List = React.createClass({
+      getInitialState: function(){
+	       return {
+           counters: [],
+           id: 0
+         }
+	    },
+      handleChange: function(event){
+        console.log('adding counter')
+        var deleteFn = function(key, source){
+          return function(){
+              source.setState({counters : source.state.counters.filter(function(deletable){
+                  console.log('delete filter',typeof deletable.key,typeof key, deletable.key !== key)
+                  return deletable.key != key
+              })
+              })
+            }
+        }
+        var deletable = (<Deletable delete={deleteFn(this.state.id, this)} key={this.state.id}>
+                            {this.props.addItem()}
+                        </Deletable>)
+        this.setState({counters: this.state.counters.concat(deletable),
+                       id: this.state.id + 1
+                     });
+      },
+      render: function(event){
+        console.log('rendering', this.state)
+        return(<div>
+              <input type="submit" onClick={this.handleChange} value={"Add "+this.props.name}/>
+              <input type="submit" onClick={this.handleChange} value={"Delete "+this.props.name}/>
+              {this.state.counters}
+		</div>)
+      }
+      });
+      ReactDOM.render(
+        <div>
+        <List name="Tweet"addItem={function(){
+          return <div> Say we had a tweet class</div>
+        }} />
+        <List name="Counter"addItem={function(){
+          return <Counter/>
+        }} />
+        </div>,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+
+
+
+
+
